@@ -4,7 +4,7 @@ import Link from 'next/link';
 export const NavigationBar = () => {
     const [open, setOpen] = useState(false);
     return (
-        <nav className="bg-white shadow">
+        <nav className=" bg-light-blue-100 shadow">
             <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
                     <div className="relative flex justify-between h-16">

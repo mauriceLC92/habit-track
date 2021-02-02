@@ -1,11 +1,7 @@
-import Link from 'next/link';
-
 export default function Home() {
     return (
         <>
             <main>
-                <Link href="/habits">Habits</Link>
-
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="rounded-lg bg-white overflow-hidden shadow">
                         <h2 className="sr-only" id="profile-overview-title">

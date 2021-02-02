@@ -1,6 +1,7 @@
 import 'tailwindcss/tailwind.css';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import { NavigationBar } from '../components/NavigationBar';
 
 function App({ Component, pageProps }: AppProps) {
     return (
@@ -9,7 +10,10 @@ function App({ Component, pageProps }: AppProps) {
                 <title>Habit track</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Component {...pageProps} />
+            <>
+                <NavigationBar />
+                <Component {...pageProps} />
+            </>
         </>
     );
 }

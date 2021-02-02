@@ -9,7 +9,7 @@ function App({ Component, pageProps }: AppProps) {
                 <title>Habit track</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Component {...pageProps} />;
+            <Component {...pageProps} />
         </>
     );
 }

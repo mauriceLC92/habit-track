@@ -8,7 +8,7 @@ const Habits = () => {
             <Header />
             <SearchBar />
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-8 gap-4">
-                {new Array(1).fill(1).map(() => {
+                {new Array(15).fill(1).map(() => {
                     return <HabitBlock />;
                 })}
                 <HabitBlockEmpty />

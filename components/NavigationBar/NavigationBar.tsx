@@ -43,13 +43,13 @@ export const NavigationBar = () => {
                             <div className="flex-shrink-0 flex items-center">
                                 <img
                                     className="block lg:hidden h-48 w-auto"
-                                    src="/default.svg"
-                                    alt="Workflow"
+                                    src="/logo.svg"
+                                    alt="Habitat"
                                 />
                                 <img
                                     className="hidden lg:block h-48 w-auto"
-                                    src="/default.svg"
-                                    alt="Workflow"
+                                    src="/logo.svg"
+                                    alt="Habitat"
                                 />
                             </div>
                             <NavItems
@@ -100,7 +100,7 @@ const NavItems = ({ navigationHeadings, isMobile }) => {
         >
             {navigationHeadings.map((navItem) => {
                 return (
-                    <Link href={`${navItem.path}`}>
+                    <Link key={navItem.path} href={`${navItem.path}`}>
                         <a
                             className={
                                 isMobile

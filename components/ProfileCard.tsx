@@ -36,20 +36,23 @@ export const ProfileCard = () => {
                     </div>
                 </div>
             </div>
+            <div>
+                {/* section to highlight what the main goals are of the habit tracking */}
+            </div>
             <div className="border-t border-gray-200 bg-gray-50 grid grid-cols-1 divide-y divide-gray-200 sm:grid-cols-3 sm:divide-y-0 sm:divide-x">
                 <div className="px-6 py-5 text-sm font-medium text-center">
-                    <span className="text-gray-900 mr-2">12</span>
-                    <span className="text-gray-600">Vacation days left</span>
+                    <span className="text-gray-900 mr-2">1</span>
+                    <span className="text-gray-600">habit being tracked</span>
                 </div>
 
                 <div className="px-6 py-5 text-sm font-medium text-center">
                     <span className="text-gray-900 mr-2">4</span>
-                    <span className="text-gray-600">Sick days left</span>
+                    <span className="text-gray-600">day streak</span>
                 </div>
 
                 <div className="px-6 py-5 text-sm font-medium text-center">
-                    <span className="text-gray-900 mr-2">2</span>
-                    <span className="text-gray-600">Personal days left</span>
+                    <span className="text-gray-900 mr-2">8</span>
+                    <span className="text-gray-600">days until high score</span>
                 </div>
             </div>
         </div>

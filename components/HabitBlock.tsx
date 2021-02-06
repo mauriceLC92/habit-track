@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { format } from 'date-fns';
 import { useMutation } from 'react-query';
 import { Habit } from '../pages/api/data/data';
-import { BadgeCheck, Pencil } from './Icons/index';
+import { BadgeCheck, Pencil } from './Icons/Icons';
 
 export const HabitBlock: FC<Habit> = ({ date, complete, note }) => {
     return (

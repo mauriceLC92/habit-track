@@ -1,3 +1,4 @@
+import { HabitFeed } from '../components/HabitFeed';
 import { ProfileCard } from '../components/ProfileCard';
 
 export default function Home() {
@@ -6,6 +7,7 @@ export default function Home() {
             <main>
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
                     <ProfileCard />
+                    <HabitFeed />
                 </div>
             </main>
         </>

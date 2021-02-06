@@ -1,3 +1,5 @@
+import { HabitFeed } from './HabitFeed';
+
 export const ProfileCard = () => {
     return (
         <div className="rounded-lg bg-white overflow-hidden shadow">

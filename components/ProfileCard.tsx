@@ -10,7 +10,7 @@ export const ProfileCard = () => {
                         <div className="flex-shrink-0">
                             <img
                                 className="mx-auto h-20 w-20 rounded-full"
-                                src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80"
+                                src="https://avatars.githubusercontent.com/u/29854288?s=460&u=aa9dab1a122a66833d2f5f1410b88deb7815e99e&v=4"
                                 alt=""
                             />
                         </div>
@@ -19,10 +19,10 @@ export const ProfileCard = () => {
                                 Welcome back,
                             </p>
                             <p className="text-xl font-bold text-gray-900 sm:text-2xl">
-                                Rebecca Nicholas
+                                Maurice Le Cordier
                             </p>
                             <p className="text-sm font-medium text-gray-600">
-                                Product Designer
+                                Software developer
                             </p>
                         </div>
                     </div>

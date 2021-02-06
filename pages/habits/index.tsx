@@ -43,7 +43,11 @@ function usePosts() {
 }
 
 const fetchHabits = async (): Promise<Habit[]> => {
-    const res = await fetch(`http://localhost:3002/api/habits/`);
+    const res = await fetch(
+        `${
+            process.env.NEXT_PUBLIC_LOCAL_URL || process.env.NEXT_PUBLIC_DEV_URL
+        }/habits/`
+    );
     if (!res.ok) {
         throw new Error('Unable to fetch habits');
     }

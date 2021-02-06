@@ -28,10 +28,16 @@ interface HabitBlockEmpty {
 export const HabitBlockEmpty = ({ refetch }) => {
     const addHabit = useMutation(
         async (newHabit: Habit) => {
-            return await fetch('http://localhost:3002/api/habits', {
-                method: 'post',
-                body: JSON.stringify(newHabit),
-            });
+            return await fetch(
+                `${
+                    process.env.NEXT_PUBLIC_LOCAL_URL ||
+                    process.env.NEXT_PUBLIC_DEV_URL
+                }/habits/`,
+                {
+                    method: 'post',
+                    body: JSON.stringify(newHabit),
+                }
+            );
         },
         {
             onSuccess: () => refetch(),

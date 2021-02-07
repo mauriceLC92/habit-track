@@ -1,5 +1,4 @@
-import { Transition } from '@headlessui/react';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import Modal from 'react-modal';
 
 interface HabitModal {
@@ -18,9 +17,6 @@ const customStyles = {
     },
 };
 export const HabitModal: FC<HabitModal> = ({ modalOpen, toggleModal }) => {
-    if (!modalOpen) {
-        return <></>;
-    }
     return (
         <Modal isOpen={modalOpen} style={customStyles}>
             <div

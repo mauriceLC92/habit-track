@@ -4,9 +4,20 @@ import { useMutation } from 'react-query';
 import { Habit } from '../pages/api/data/data';
 import { BadgeCheck, Pencil } from './Icons/Icons';
 
-export const HabitBlock: FC<Habit> = ({ date, complete, note }) => {
+interface HabitBlock {
+    date: string;
+    complete?: boolean;
+    note?: string;
+    toggleModal: () => void;
+}
+export const HabitBlock: FC<HabitBlock> = ({
+    date,
+    complete,
+    note,
+    toggleModal,
+}) => {
     return (
-        <li className="cursor-pointer">
+        <li onClick={toggleModal} className="cursor-pointer">
             <a className="hover:bg-green-200 bg-green-100 hover:border-transparent hover:shadow-lg group block rounded-lg p-4 border border-gray-200">
                 <div className="flex flex-col items-center space-y-2">
                     <BadgeCheck className="text-green-600 w-12 h-12" />

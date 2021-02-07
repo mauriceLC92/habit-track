@@ -1,11 +1,17 @@
+import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { HabitBlock, HabitBlockEmpty } from '../../components/HabitBlock';
+import { HabitModal } from '../../components/HabitModal';
 import { Header } from '../../components/Header';
 import { PageLoad } from '../../components/Loading/PageLoad';
 import { SearchBar } from '../../components/SearchBar';
 import { Habit } from '../api/data/data';
 
 const Habits = () => {
+    const [modalOpen, setModalOpen] = useState(false);
+    const toggleModal = () => {
+        setModalOpen(!modalOpen);
+    };
     const { isError, isLoading, data: habitsData, error, refetch } = useQuery(
         'fetchHabits',
         fetchHabits
@@ -22,10 +28,17 @@ const Habits = () => {
             <SearchBar />
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-8 gap-4">
                 {habitsData.map((habit) => {
-                    return <HabitBlock key={habit.id} {...habit} />;
+                    return (
+                        <HabitBlock
+                            key={habit.id}
+                            date={habit.date}
+                            toggleModal={toggleModal}
+                        />
+                    );
                 })}
                 <HabitBlockEmpty refetch={refetch} />
             </ul>
+            <HabitModal modalOpen={modalOpen} toggleModal={toggleModal} />
         </section>
     );
 };

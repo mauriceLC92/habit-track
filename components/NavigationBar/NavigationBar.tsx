@@ -23,6 +23,10 @@ const navigationHeadings: NavItems[] = [
         title: 'Profile',
         path: '/profile',
     },
+    {
+        title: 'Settings',
+        path: '/settings',
+    },
 ];
 
 export const NavigationBar = () => {

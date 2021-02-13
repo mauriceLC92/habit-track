@@ -6,7 +6,7 @@ export interface Habit {
     note?: string;
 }
 
-export const habits: Habit[] = new Array(1).fill(1).map((_, i) => ({
+export const habits: Habit[] = new Array(29).fill(1).map((_, i) => ({
     id: (Date.now() + i).toString(),
     date: format(new Date(), 'yyyy-MM-dd'),
     complete: false,

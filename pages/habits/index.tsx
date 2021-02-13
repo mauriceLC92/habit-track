@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { HabitBlock, HabitBlockEmpty } from '../../components/HabitBlock';
@@ -30,8 +31,9 @@ const Habits = () => {
                 {habitsData.map((habit) => {
                     return (
                         <HabitBlock
-                            key={habit.id}
+                            key={habit.date}
                             date={habit.date}
+                            complete={habit.complete}
                             toggleModal={toggleModal}
                         />
                     );
@@ -65,7 +67,8 @@ const fetchHabits = async (): Promise<Habit[]> => {
         throw new Error('Unable to fetch habits');
     }
     const { data } = await res.json();
-    return data;
+    const currentMonth = format(new Date(), 'MMMM').toLowerCase();
+    return data[currentMonth];
 };
 
 export default Habits;

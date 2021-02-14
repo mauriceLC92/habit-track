@@ -5,13 +5,16 @@ import { prisma } from '../../../lib/prisma';
 // See here for defining custom properties on the req and res: https://www.npmjs.com/package/next-connect#typescript
 const handler = nc<NextApiRequest, NextApiResponse>();
 handler.get(async (req, res) => {
-    const habits = await prisma.habits.findFirst({
+    //todo -  need to get userId off the request
+    const habits = await prisma.habits.findMany({
         where: {
             userId: '0d6b8829-3a67-4532-ad4c-d11469cd2033',
-            year: 2021,
+        },
+        orderBy: {
+            day: 'asc',
         },
     });
-    res.json({ data: habits });
+    res.json(habits);
 });
 // handler.post((req, res) => {
 //     const id = Date.now();

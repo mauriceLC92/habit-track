@@ -1,21 +1,27 @@
 import { FC } from 'react';
-import { format } from 'date-fns';
 import { useMutation } from 'react-query';
-import { Habit } from '../pages/api/data/data';
 import { BadgeCheck, Pencil } from './Icons/Icons';
+import axios from 'axios';
 
 interface HabitBlock {
+    id: string;
     date: string;
     complete?: boolean;
     note?: string;
     toggleModal: () => void;
+    refetch: () => void;
 }
 export const HabitBlock: FC<HabitBlock> = ({
     date,
     complete,
+    id,
     note,
     toggleModal,
+    refetch,
 }) => {
+    if (!complete) {
+        return <HabitBlockEmpty id={id} refetch={refetch} />;
+    }
     return (
         <li onClick={toggleModal} className="cursor-pointer">
             <a className="hover:bg-green-200 bg-green-100 hover:border-transparent hover:shadow-lg group block rounded-lg p-4 border border-gray-200">
@@ -36,18 +42,19 @@ interface HabitBlockEmpty {
     refetch: () => void;
 }
 
-export const HabitBlockEmpty = ({ refetch }) => {
-    const addHabit = useMutation(
-        async (newHabit: Habit) => {
-            return await fetch(
+interface HabitDto {
+    complete: boolean;
+}
+
+export const HabitBlockEmpty = ({ id, refetch }) => {
+    const addHabitMutation = useMutation(
+        async (newHabit: HabitDto) => {
+            return axios.patch(
                 `${
                     process.env.NEXT_PUBLIC_LOCAL_URL ||
                     process.env.NEXT_PUBLIC_DEV_URL
-                }/habits/`,
-                {
-                    method: 'post',
-                    body: JSON.stringify(newHabit),
-                }
+                }/habits/${id}`,
+                newHabit
             );
         },
         {
@@ -57,16 +64,14 @@ export const HabitBlockEmpty = ({ refetch }) => {
     return (
         <li className="hover:shadow-lg flex rounded-lg">
             <button
-                onClick={() =>
-                    addHabit.mutate({
-                        id: Date.now().toString(),
-                        date: format(new Date(), 'yyyy-MM-dd'),
+                onClick={async () =>
+                    addHabitMutation.mutate({
                         complete: true,
                     })
                 }
                 className="hover:border-black hover:bg-gray-50 hover:shadow-xs w-full flex items-center justify-center rounded-lg border-2 border-dashed border-gray-400 text-sm font-medium py-4"
             >
-                {addHabit.isLoading ? 'Adding habit...' : 'Tick me!'}
+                {addHabitMutation.isLoading ? 'Adding habit...' : 'Tick me!'}
             </button>
         </li>
     );

@@ -1,12 +1,12 @@
 import { format } from 'date-fns';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { HabitBlock, HabitBlockEmpty } from '../../components/HabitBlock';
+import { HabitBlock } from '../../components/HabitBlock';
 import { HabitModal } from '../../components/HabitModal';
 import { Header } from '../../components/Header';
 import { PageLoad } from '../../components/Loading/PageLoad';
 import { SearchBar } from '../../components/SearchBar';
-import { Habit } from '../api/data/data';
+import { fetchHabits } from './hooks/use-habits';
 
 const Habits = () => {
     const [modalOpen, setModalOpen] = useState(false);
@@ -31,44 +31,19 @@ const Habits = () => {
                 {habitsData.map((habit) => {
                     return (
                         <HabitBlock
-                            key={habit.date}
+                            id={habit.id}
+                            key={habit.id}
                             date={habit.date}
                             complete={habit.complete}
                             toggleModal={toggleModal}
+                            refetch={refetch}
                         />
                     );
                 })}
-                <HabitBlockEmpty refetch={refetch} />
             </ul>
             <HabitModal modalOpen={modalOpen} toggleModal={toggleModal} />
         </section>
     );
-};
-
-// Make a hook like this to fetch any data and also handle the error
-function usePosts() {
-    return useQuery('posts', async () => {
-        const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-        if (!res.ok) {
-            throw new Error('Unable to fetch habits');
-        }
-        const { data } = await res.json();
-        return data;
-    });
-}
-
-const fetchHabits = async (): Promise<Habit[]> => {
-    const res = await fetch(
-        `${
-            process.env.NEXT_PUBLIC_LOCAL_URL || process.env.NEXT_PUBLIC_DEV_URL
-        }/habits/`
-    );
-    if (!res.ok) {
-        throw new Error('Unable to fetch habits');
-    }
-    const { data } = await res.json();
-    const currentMonth = format(new Date(), 'MMMM').toLowerCase();
-    return data[currentMonth];
 };
 
 export default Habits;

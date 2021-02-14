@@ -18,7 +18,6 @@ const main = async () => {
 
     for (const habit of habits) {
         await prisma.habits.create({
-            // @ts-ignore
             data: habit,
         });
     }

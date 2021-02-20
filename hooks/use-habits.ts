@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useMutation, useQuery } from 'react-query';
-import { Habit } from '../../api/habits/domain/habits';
+import { Habit } from '../pages/api/habits/domain/habits';
 
 // Make a hook like this to fetch any data and also handle the error
 export const usePosts = () => {

@@ -5,8 +5,8 @@ import { HabitModal } from '../../components/HabitModal';
 import { Header } from '../../components/Header';
 import { PageLoad } from '../../components/Loading/PageLoad';
 import { SearchBar } from '../../components/SearchBar';
+import { fetchHabits } from '../../hooks/use-habits';
 import { Habit } from '../api/habits/domain/habits';
-import { fetchHabits } from './hooks/use-habits';
 
 const getHabitNote = (habitsData: Habit[], id: string) => {
     return habitsData.find((habit) => habit.id === id).note;

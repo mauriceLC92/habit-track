@@ -2,7 +2,6 @@ import { FC } from 'react';
 import { useMutation } from 'react-query';
 import { BadgeCheck, Pencil } from './Icons/Icons';
 import axios from 'axios';
-import { useUpdateHabit } from '../pages/habits/hooks/use-habits';
 
 interface HabitBlock {
     id: string;

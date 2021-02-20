@@ -27,34 +27,34 @@ export const fetchHabits = async (): Promise<Habit[]> => {
     return habits;
 };
 
-interface HabitDto {
-    complete?: boolean;
-    note?: string;
-}
+// interface HabitDto {
+//     complete?: boolean;
+//     note?: string;
+// }
 
-interface UseHabitHook {
-    refetch: () => void;
-    habitData: HabitDto;
-    habitId: string;
-}
+// interface UseHabitHook {
+//     refetch: () => void;
+//     habitData: HabitDto;
+//     habitId: string;
+// }
 
-export const useUpdateHabit = async ({
-    refetch,
-    habitData,
-    habitId,
-}: UseHabitHook) => {
-    return useMutation(
-        async () => {
-            return axios.patch(
-                `${
-                    process.env.NEXT_PUBLIC_LOCAL_URL ||
-                    process.env.NEXT_PUBLIC_DEV_URL
-                }/habits/${habitId}`,
-                habitData
-            );
-        },
-        {
-            onSuccess: () => refetch(),
-        }
-    );
-};
+// export const useUpdateHabit = async ({
+//     refetch,
+//     habitData,
+//     habitId,
+// }: UseHabitHook) => {
+//     return useMutation(
+//         async () => {
+//             return axios.patch(
+//                 `${
+//                     process.env.NEXT_PUBLIC_LOCAL_URL ||
+//                     process.env.NEXT_PUBLIC_DEV_URL
+//                 }/habits/${habitId}`,
+//                 habitData
+//             );
+//         },
+//         {
+//             onSuccess: () => refetch(),
+//         }
+//     );
+// };

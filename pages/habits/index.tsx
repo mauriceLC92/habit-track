@@ -1,4 +1,3 @@
-import { format } from 'date-fns';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { HabitBlock } from '../../components/HabitBlock';

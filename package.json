@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "migrate": "npx prisma migrate dev --preview-feature",
-    "seed": "npx prisma db seed --preview-feature"
+    "seed": "npx prisma db seed --preview-feature",
+    "studio": "npx prisma studio"
   },
   "dependencies": {
     "@headlessui/react": "^0.2.0",

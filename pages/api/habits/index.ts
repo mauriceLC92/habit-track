@@ -22,6 +22,7 @@ handler.get(async (req, res) => {
         res.status(404).json({
             error: `No habits found for user with ID: ${userId}`,
         });
+        res.end();
     }
     res.json(habits);
 });

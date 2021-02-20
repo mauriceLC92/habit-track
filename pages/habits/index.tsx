@@ -5,17 +5,26 @@ import { HabitModal } from '../../components/HabitModal';
 import { Header } from '../../components/Header';
 import { PageLoad } from '../../components/Loading/PageLoad';
 import { SearchBar } from '../../components/SearchBar';
+import { Habit } from '../api/habits/domain/habits';
 import { fetchHabits } from './hooks/use-habits';
+
+const getHabitNote = (habitsData: Habit[], id: string) => {
+    return habitsData.find((habit) => habit.id === id).note;
+};
 
 const Habits = () => {
     const [modalOpen, setModalOpen] = useState(false);
-    const toggleModal = () => {
-        setModalOpen(!modalOpen);
-    };
+    const [habitId, setHabitId] = useState('');
+    const [habitNote, setHabitNote] = useState('');
     const { isError, isLoading, data: habitsData, error, refetch } = useQuery(
         'fetchHabits',
         fetchHabits
     );
+    const toggleModal = (id: string) => {
+        setHabitId(() => id);
+        setHabitNote(() => getHabitNote(habitsData, id));
+        setModalOpen(!modalOpen);
+    };
     if (isError) {
         return `Error returning data, ${error}`;
     }
@@ -27,20 +36,23 @@ const Habits = () => {
             <Header />
             <SearchBar />
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-8 gap-4">
-                {habitsData.map((habit) => {
+                {habitsData.map((habit: Habit) => {
                     return (
                         <HabitBlock
-                            id={habit.id}
-                            key={habit.id}
-                            date={habit.date}
-                            complete={habit.complete}
+                            {...habit}
                             toggleModal={toggleModal}
                             refetch={refetch}
                         />
                     );
                 })}
             </ul>
-            <HabitModal modalOpen={modalOpen} toggleModal={toggleModal} />
+            <HabitModal
+                habitNote={habitNote}
+                habitId={habitId}
+                refetch={refetch}
+                modalOpen={modalOpen}
+                toggleModal={toggleModal}
+            />
         </section>
     );
 };

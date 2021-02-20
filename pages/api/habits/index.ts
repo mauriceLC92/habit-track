@@ -4,19 +4,41 @@ import { prisma } from '../../../lib/prisma';
 
 // See here for defining custom properties on the req and res: https://www.npmjs.com/package/next-connect#typescript
 const handler = nc<NextApiRequest, NextApiResponse>();
+
+const defaultUserId = '0d6b8829-3a67-4532-ad4c-d11469cd2033';
+
 handler.get(async (req, res) => {
-    const habits = await prisma.habits.findFirst({
+    const userId = defaultUserId;
+    //todo -  need to get userId off the request
+    const habits = await prisma.habits.findMany({
         where: {
-            userId: '0d6b8829-3a67-4532-ad4c-d11469cd2033',
-            year: 2021,
+            userId,
+        },
+        orderBy: {
+            day: 'asc',
         },
     });
-    res.json({ data: habits });
+    if (habits.length === 0) {
+        res.status(404).json({
+            error: `No habits found for user with ID: ${userId}`,
+        });
+        res.end();
+    }
+    res.json(habits);
 });
-// handler.post((req, res) => {
-//     const id = Date.now();
-//     const habit = { ...JSON.parse(req.body), id };
-//     habits.push(habit);
-//     res.json({ data: habit });
-// });
+
+handler.post(async (req, res) => {
+    // todo - validate the incoming body object
+    const updatedHabits = await prisma.habits.updateMany({
+        where: {
+            userId: defaultUserId,
+        },
+        data: {
+            ...req.body,
+        },
+    });
+
+    res.json(updatedHabits);
+});
+
 export default handler;

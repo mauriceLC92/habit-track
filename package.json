@@ -6,12 +6,15 @@
     "dev": "next dev -p 3002",
     "build": "next build",
     "start": "next start",
-    "seed": "npx prisma db seed --preview-feature"
+    "migrate": "npx prisma migrate dev --preview-feature",
+    "seed": "npx prisma db seed --preview-feature",
+    "studio": "npx prisma studio"
   },
   "dependencies": {
     "@headlessui/react": "^0.2.0",
     "@prisma/client": "^2.16.1",
     "autoprefixer": "^10.2.3",
+    "axios": "^0.21.1",
     "cors": "^2.8.5",
     "date-fns": "^2.16.1",
     "dotenv-load": "^2.0.0",

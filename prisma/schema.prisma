@@ -19,24 +19,32 @@ model users {
   updatedAt DateTime  @map("updated_at")
 }
 
+enum Month {
+  january
+  february
+  march
+  april
+  may
+  june
+  july
+  august
+  september
+  october
+  november
+  december
+}
+
 model habits {
   id        String   @id
-  habit     String   @unique
   year      Int
+  month     Month
+  date      String
+  day       Int
+  habit     String
+  note      String?
+  complete  Boolean
   createdAt DateTime @map("created_at")
   updatedAt DateTime @map("updated_at")
-  january   Json[]
-  february  Json[]
-  march     Json[]
-  april     Json[]
-  may       Json[]
-  june      Json[]
-  july      Json[]
-  august    Json[]
-  september Json[]
-  october   Json[]
-  november  Json[]
-  december  Json[]
   user      users    @relation(fields: [userId], references: [id])
   userId    String   @map("user_id")
 }

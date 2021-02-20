@@ -1,10 +1,18 @@
-import { FC } from 'react';
+import axios from 'axios';
+import { FC, useEffect, useState } from 'react';
 import Modal from 'react-modal';
+import { useMutation } from 'react-query';
+import { HabitDto } from './HabitBlock';
 
 interface HabitModal {
     modalOpen: boolean;
-    toggleModal: () => void;
+    toggleModal: (id: string) => void;
+    ariaLabel?: string;
+    refetch: () => void;
+    habitId: string;
+    habitNote: string;
 }
+
 const customStyles = {
     content: {
         top: '50%',
@@ -16,9 +24,47 @@ const customStyles = {
         border: 'none',
     },
 };
-export const HabitModal: FC<HabitModal> = ({ modalOpen, toggleModal }) => {
+
+export const HabitModal: FC<HabitModal> = ({
+    modalOpen,
+    toggleModal,
+    refetch,
+    habitId,
+    habitNote,
+}) => {
+    const [note, setNote] = useState('');
+    const addHabitMutation = useMutation(
+        async (habitDto: HabitDto) => {
+            return axios.patch(
+                `${
+                    process.env.NEXT_PUBLIC_LOCAL_URL ||
+                    process.env.NEXT_PUBLIC_DEV_URL
+                }/habits/${habitId}`,
+                habitDto
+            );
+        },
+        {
+            onSuccess: () => refetch(),
+        }
+    );
+    const handleNoteChange = (e: React.FormEvent) => {
+        e.preventDefault();
+        const element = e.target as HTMLTextAreaElement;
+        setNote(element.value);
+    };
+    useEffect(() => {
+        // This is needed so screen readers don't see main content when modal is opened
+        if (typeof window !== 'undefined') {
+            Modal.setAppElement('body');
+        }
+    });
     return (
-        <Modal isOpen={modalOpen} style={customStyles}>
+        <Modal
+            // ariaHideApp={false}
+            isOpen={modalOpen}
+            style={customStyles}
+            appElement={document.getElementById('root') as HTMLElement}
+        >
             <div
                 className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
                 role="dialog"
@@ -54,11 +100,13 @@ export const HabitModal: FC<HabitModal> = ({ modalOpen, toggleModal }) => {
                             <div>
                                 <div className="mt-1">
                                     <textarea
+                                        onChange={(e) => handleNoteChange(e)}
                                         id="note"
                                         name="note"
                                         rows={3}
                                         className="shadow-sm outline-black focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-72 md:w-96 sm:text-sm border-gray-300 rounded-md"
                                         placeholder="I hit my target of 22 push ups."
+                                        defaultValue={habitNote}
                                     ></textarea>
                                 </div>
                                 <p className="mt-2 text-sm text-gray-500">
@@ -70,13 +118,19 @@ export const HabitModal: FC<HabitModal> = ({ modalOpen, toggleModal }) => {
                 </div>
                 <div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
                     <button
+                        onClick={() => {
+                            addHabitMutation.mutate({
+                                note,
+                            });
+                            toggleModal(habitId);
+                        }}
                         type="button"
                         className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm"
                     >
                         Save
                     </button>
                     <button
-                        onClick={toggleModal}
+                        onClick={() => toggleModal(habitId)}
                         type="button"
                         className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
                     >

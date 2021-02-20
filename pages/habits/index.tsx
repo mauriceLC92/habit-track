@@ -1,22 +1,30 @@
-import { format } from 'date-fns';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { HabitBlock, HabitBlockEmpty } from '../../components/HabitBlock';
+import { HabitBlock } from '../../components/HabitBlock';
 import { HabitModal } from '../../components/HabitModal';
 import { Header } from '../../components/Header';
 import { PageLoad } from '../../components/Loading/PageLoad';
 import { SearchBar } from '../../components/SearchBar';
-import { Habit } from '../api/data/data';
+import { Habit } from '../api/habits/domain/habits';
+import { fetchHabits } from './hooks/use-habits';
+
+const getHabitNote = (habitsData: Habit[], id: string) => {
+    return habitsData.find((habit) => habit.id === id).note;
+};
 
 const Habits = () => {
     const [modalOpen, setModalOpen] = useState(false);
-    const toggleModal = () => {
-        setModalOpen(!modalOpen);
-    };
+    const [habitId, setHabitId] = useState('');
+    const [habitNote, setHabitNote] = useState('');
     const { isError, isLoading, data: habitsData, error, refetch } = useQuery(
         'fetchHabits',
         fetchHabits
     );
+    const toggleModal = (id: string) => {
+        setHabitId(() => id);
+        setHabitNote(() => getHabitNote(habitsData, id));
+        setModalOpen(!modalOpen);
+    };
     if (isError) {
         return `Error returning data, ${error}`;
     }
@@ -28,47 +36,25 @@ const Habits = () => {
             <Header />
             <SearchBar />
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-8 gap-4">
-                {habitsData.map((habit) => {
+                {habitsData.map((habit: Habit) => {
                     return (
                         <HabitBlock
-                            key={habit.date}
-                            date={habit.date}
-                            complete={habit.complete}
+                            {...habit}
                             toggleModal={toggleModal}
+                            refetch={refetch}
                         />
                     );
                 })}
-                <HabitBlockEmpty refetch={refetch} />
             </ul>
-            <HabitModal modalOpen={modalOpen} toggleModal={toggleModal} />
+            <HabitModal
+                habitNote={habitNote}
+                habitId={habitId}
+                refetch={refetch}
+                modalOpen={modalOpen}
+                toggleModal={toggleModal}
+            />
         </section>
     );
-};
-
-// Make a hook like this to fetch any data and also handle the error
-function usePosts() {
-    return useQuery('posts', async () => {
-        const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-        if (!res.ok) {
-            throw new Error('Unable to fetch habits');
-        }
-        const { data } = await res.json();
-        return data;
-    });
-}
-
-const fetchHabits = async (): Promise<Habit[]> => {
-    const res = await fetch(
-        `${
-            process.env.NEXT_PUBLIC_LOCAL_URL || process.env.NEXT_PUBLIC_DEV_URL
-        }/habits/`
-    );
-    if (!res.ok) {
-        throw new Error('Unable to fetch habits');
-    }
-    const { data } = await res.json();
-    const currentMonth = format(new Date(), 'MMMM').toLowerCase();
-    return data[currentMonth];
 };
 
 export default Habits;

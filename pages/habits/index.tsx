@@ -21,8 +21,10 @@ const Habits = () => {
         fetchHabits
     );
     const toggleModal = (id: string) => {
-        setHabitId(() => id);
-        setHabitNote(() => getHabitNote(habitsData, id));
+        if (!modalOpen) {
+            setHabitId(() => id);
+            setHabitNote(() => getHabitNote(habitsData, id));
+        }
         setModalOpen(!modalOpen);
     };
     if (isError) {
@@ -31,6 +33,7 @@ const Habits = () => {
     if (isLoading) {
         return <PageLoad />;
     }
+
     return (
         <section className="px-4 sm:px-6 lg:px-4 xl:px-6 pt-4 pb-4 sm:pb-6 lg:pb-4 xl:pb-6 space-y-4">
             <Header />
@@ -40,6 +43,7 @@ const Habits = () => {
                     return (
                         <HabitBlock
                             {...habit}
+                            key={habit.id}
                             toggleModal={toggleModal}
                             refetch={refetch}
                         />

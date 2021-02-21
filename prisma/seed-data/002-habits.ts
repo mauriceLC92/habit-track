@@ -1,7 +1,7 @@
 import { UUID } from '../../lib/uuid';
 import getDaysInMonth from 'date-fns/getDaysInMonth';
-import { DbHabit, Month } from '../../pages/api/habits/domain/habits';
 import { format } from 'date-fns';
+import { DbHabit, Month } from '../../pages/api/habits/domain/habits';
 
 export const habits: DbHabit[] = new Array(getDaysInMonth(new Date(2021, 1)))
     .fill(1)

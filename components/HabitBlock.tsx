@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { useMutation } from 'react-query';
 import { BadgeCheck, Pencil } from './Icons/Icons';
 import axios from 'axios';
+import { format, parse } from 'date-fns';
 
 interface HabitBlock {
     id: string;
@@ -11,6 +12,12 @@ interface HabitBlock {
     toggleModal: (id: string) => void;
     refetch: () => void;
 }
+
+export const formattedDate = (date: string) => {
+    const parsedDate = parse(date, 'dd/MM/yyyy', new Date());
+    return format(parsedDate, 'do LLL yy');
+};
+
 export const HabitBlock: FC<HabitBlock> = ({
     date,
     complete,
@@ -20,8 +27,9 @@ export const HabitBlock: FC<HabitBlock> = ({
     refetch,
 }) => {
     if (!complete) {
-        return <HabitBlockEmpty id={id} refetch={refetch} />;
+        return <HabitBlockEmpty date={date} id={id} refetch={refetch} />;
     }
+
     return (
         <li onClick={() => toggleModal(id)} className="cursor-pointer">
             <a className="hover:bg-green-200 bg-green-100 hover:border-transparent hover:shadow-lg group block rounded-lg p-4 border border-gray-200">
@@ -29,8 +37,8 @@ export const HabitBlock: FC<HabitBlock> = ({
                     <BadgeCheck className="text-green-600 w-12 h-12" />
 
                     <div className="flex space-x-6 items-center">
-                        <p>{date}</p>
-                        <Pencil className="w-8 h-8" />
+                        <p>{formattedDate(date)}</p>
+                        {!!note && <Pencil className="w-8 h-8" />}
                     </div>
                 </div>
             </a>
@@ -40,6 +48,8 @@ export const HabitBlock: FC<HabitBlock> = ({
 
 interface HabitBlockEmpty {
     refetch: () => void;
+    date: string;
+    id: string;
 }
 
 export interface HabitDto {
@@ -47,7 +57,7 @@ export interface HabitDto {
     note?: string;
 }
 
-export const HabitBlockEmpty = ({ id, refetch }) => {
+export const HabitBlockEmpty: FC<HabitBlockEmpty> = ({ id, refetch, date }) => {
     const addHabitMutation = useMutation(
         async (newHabit: HabitDto) => {
             return axios.patch(
@@ -72,7 +82,9 @@ export const HabitBlockEmpty = ({ id, refetch }) => {
                 }
                 className="hover:border-black hover:bg-gray-50 hover:shadow-xs w-full flex items-center justify-center rounded-lg border-2 border-dashed border-gray-400 text-sm font-medium py-4"
             >
-                {addHabitMutation.isLoading ? 'Adding habit...' : 'Tick me!'}
+                {addHabitMutation.isLoading
+                    ? 'Adding habit...'
+                    : formattedDate(date)}
             </button>
         </li>
     );

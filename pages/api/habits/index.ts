@@ -1,16 +1,16 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';
-import { prisma } from '../../../lib/prisma';
+import prisma from '../../../lib/prisma';
 
 // See here for defining custom properties on the req and res: https://www.npmjs.com/package/next-connect#typescript
 const handler = nc<NextApiRequest, NextApiResponse>();
 
-const defaultUserId = '0d6b8829-3a67-4532-ad4c-d11469cd2033';
+const defaultUserId = 1;
 
 handler.get(async (req, res) => {
     const userId = defaultUserId;
     //todo -  need to get userId off the request
-    const habits = await prisma.habits.findMany({
+    const habits = await prisma.habit.findMany({
         where: {
             userId,
         },
@@ -28,8 +28,15 @@ handler.get(async (req, res) => {
 });
 
 handler.post(async (req, res) => {
+    const habits = await prisma.habit.createMany({
+        data: [req.body],
+    });
+    res.json(habits);
+});
+
+handler.patch(async (req, res) => {
     // todo - validate the incoming body object
-    const updatedHabits = await prisma.habits.updateMany({
+    const updatedHabits = await prisma.habit.updateMany({
         where: {
             userId: defaultUserId,
         },

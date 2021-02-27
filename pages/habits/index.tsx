@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import { HabitBlock } from '../../components/HabitBlock';
 import { HabitModal } from '../../components/HabitModal';
 import { Header } from '../../components/Header';
-import { PageLoad } from '../../components/Loading/PageLoad';
+import { PageLoad } from '../../components/OverLays/PageLoad';
 import { SearchBar } from '../../components/SearchBar';
 import { fetchHabits } from '../../hooks/use-habits';
 import { Habit } from '../api/habits/domain/habits';

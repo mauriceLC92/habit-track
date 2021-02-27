@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';
-import { prisma } from '../../../lib/prisma';
+import prisma from '../../../lib/prisma';
 import { getHabit } from './actions/get-habit-by-id';
 
 const handler = nc<NextApiRequest, NextApiResponse>();
 
 handler.get(async (req, res) => {
-    const habitId = req.query.id as string;
+    const habitId = parseInt(req.query.id as string);
     const habit = await getHabit(habitId);
 
     if (!habit) {
@@ -19,14 +19,14 @@ handler.get(async (req, res) => {
 });
 
 handler.patch(async (req, res) => {
-    const habitId = req.query.id as string;
+    const habitId = parseInt(req.query.id as string);
     const habit = getHabit(habitId);
     if (!habit) {
         res.status(404);
         res.end();
         return;
     }
-    const updatedHabit = await prisma.habits.update({
+    const updatedHabit = await prisma.habit.update({
         where: {
             id: habitId,
         },

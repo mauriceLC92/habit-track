@@ -6,10 +6,10 @@ import { HabitDto } from './HabitBlock';
 
 interface HabitModal {
     modalOpen: boolean;
-    toggleModal: (id: string) => void;
+    toggleModal: (id: number) => void;
     ariaLabel?: string;
     refetch: () => void;
-    habitId: string;
+    habitId: number;
     habitNote: string;
 }
 

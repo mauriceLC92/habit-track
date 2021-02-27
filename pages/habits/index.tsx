@@ -8,19 +8,19 @@ import { SearchBar } from '../../components/SearchBar';
 import { fetchHabits } from '../../hooks/use-habits';
 import { Habit } from '../api/habits/domain/habits';
 
-const getHabitNote = (habitsData: Habit[], id: string) => {
+const getHabitNote = (habitsData: Habit[], id: number) => {
     return habitsData.find((habit) => habit.id === id).note;
 };
 
 const Habits = () => {
     const [modalOpen, setModalOpen] = useState(false);
-    const [habitId, setHabitId] = useState('');
+    const [habitId, setHabitId] = useState(null);
     const [habitNote, setHabitNote] = useState('');
     const { isError, isLoading, data: habitsData, error, refetch } = useQuery(
         'fetchHabits',
         fetchHabits
     );
-    const toggleModal = (id: string) => {
+    const toggleModal = (id: number) => {
         if (!modalOpen) {
             setHabitId(() => id);
             setHabitNote(() => getHabitNote(habitsData, id));

@@ -14,7 +14,6 @@ export enum Month {
 }
 
 export interface DbHabit {
-    id: string;
     year: number;
     month: Month;
     date: string;
@@ -22,13 +21,11 @@ export interface DbHabit {
     habit: string;
     note?: string;
     complete: boolean;
-    createdAt: Date;
-    updatedAt: Date;
-    userId: string;
+    userId: number;
 }
 
 export interface Habit {
-    id: string;
+    id: number;
     year: number;
     month: Month;
     date: string;
@@ -38,5 +35,5 @@ export interface Habit {
     complete: boolean;
     createdAt: Date;
     updatedAt: Date;
-    userId: string;
+    userId: number;
 }

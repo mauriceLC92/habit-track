@@ -1,7 +1,7 @@
-import { prisma } from '../../../../lib/prisma';
+import prisma from '../../../../lib/prisma';
 
-export const getHabit = async (id: string) =>
-    await prisma.habits.findUnique({
+export const getHabit = async (id: number) =>
+    await prisma.habit.findUnique({
         where: {
             id,
         },

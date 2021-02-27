@@ -5,11 +5,11 @@ import axios from 'axios';
 import { format, parse } from 'date-fns';
 
 interface HabitBlock {
-    id: string;
+    id: number;
     date: string;
     complete?: boolean;
     note?: string;
-    toggleModal: (id: string) => void;
+    toggleModal: (id: number) => void;
     refetch: () => void;
 }
 
@@ -49,7 +49,7 @@ export const HabitBlock: FC<HabitBlock> = ({
 interface HabitBlockEmpty {
     refetch: () => void;
     date: string;
-    id: string;
+    id: number;
 }
 
 export interface HabitDto {

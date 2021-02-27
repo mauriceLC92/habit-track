@@ -1,15 +1,16 @@
 import { Transition } from '@headlessui/react';
 import { FC } from 'react';
+import { signIn, signOut, useSession } from 'next-auth/client';
 
 interface ProfileDropdown {
     isOpen: boolean;
     toggleProfileMenu: () => void;
 }
 
-export const ProfileDropdown: FC<ProfileDropdown> = ({
+export const ProfileDropdown = ({
     isOpen,
     toggleProfileMenu,
-}) => {
+}: ProfileDropdown) => {
     return (
         <div className="ml-3 relative">
             <div>
@@ -57,7 +58,8 @@ export const ProfileDropdown: FC<ProfileDropdown> = ({
                         Settings
                     </a>
                     <a
-                        href="#"
+                        href="/"
+                        onClick={() => signOut()}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         role="menuitem"
                     >

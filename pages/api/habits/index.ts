@@ -12,24 +12,24 @@ handler.get(async (req, res) => {
     //todo -  need to get userId off the request
     const habits = await prisma.habit.findMany({
         where: {
-            userId,
+            userId: 6,
         },
         orderBy: {
             day: 'asc',
         },
     });
-    if (habits.length === 0) {
-        res.status(404).json({
-            error: `No habits found for user with ID: ${userId}`,
-        });
-        res.end();
-    }
+    // if (habits.length === 0) {
+    //     res.status(404).json({
+    //         error: `No habits found for user with ID: ${userId}`,
+    //     });
+    //     res.end();
+    // }
     res.json(habits);
 });
 
 handler.post(async (req, res) => {
     const habits = await prisma.habit.createMany({
-        data: [req.body],
+        data: req.body,
     });
     res.json(habits);
 });

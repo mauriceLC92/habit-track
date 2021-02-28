@@ -14,7 +14,7 @@ export const usePosts = () => {
     });
 };
 
-export const fetchHabits = async (): Promise<Habit[]> => {
+export const fetchHabits = async (userId: number): Promise<Habit[]> => {
     const res = await fetch(
         `${
             process.env.NEXT_PUBLIC_LOCAL_URL || process.env.NEXT_PUBLIC_DEV_URL

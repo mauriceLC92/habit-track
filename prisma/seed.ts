@@ -25,25 +25,25 @@ const main = async () => {
     //         data: user,
     //     });
     // }
-    const userData = {
-        email: 'mauricelecordier@gmail.com',
-        password: '1234567890',
-        name: 'Maurice',
-        surname: 'Le Cordier',
-    };
+    // const userData = {
+    //     email: 'mauricelecordier@gmail.com',
+    //     password: '1234567890',
+    //     name: 'Maurice',
+    //     surname: 'Le Cordier',
+    // };
 
-    const newUser = await prisma.user.create({
-        data: userData,
-    });
+    // const newUser = await prisma.user.create({
+    //     data: userData,
+    // });
 
-    for (const habit of habits) {
-        await prisma.habit.create({
-            data: {
-                userId: newUser.id,
-                ...habit,
-            },
-        });
-    }
+    // for (const habit of habits) {
+    //     await prisma.habit.create({
+    //         data: {
+    //             userId: newUser.id,
+    //             ...habit,
+    //         },
+    //     });
+    // }
 };
 
 main()

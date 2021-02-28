@@ -18,14 +18,14 @@ export const formattedDate = (date: string) => {
     return format(parsedDate, 'do LLL yy');
 };
 
-export const HabitBlock: FC<HabitBlock> = ({
+export const HabitBlock = ({
     date,
     complete,
     id,
     note,
     toggleModal,
     refetch,
-}) => {
+}: HabitBlock) => {
     if (!complete) {
         return <HabitBlockEmpty date={date} id={id} refetch={refetch} />;
     }
@@ -57,7 +57,7 @@ export interface HabitDto {
     note?: string;
 }
 
-export const HabitBlockEmpty: FC<HabitBlockEmpty> = ({ id, refetch, date }) => {
+export const HabitBlockEmpty = ({ id, refetch, date }: HabitBlockEmpty) => {
     const addHabitMutation = useMutation(
         async (newHabit: HabitDto) => {
             return axios.patch(

@@ -4,14 +4,13 @@ import { signIn, signOut, useSession } from 'next-auth/client';
 import { getSession } from 'next-auth/client';
 import { SignInOverlay } from '../components/OverLays/SignIn';
 import { PageLoad } from '../components/OverLays/PageLoad';
+import { AlertInformational } from '../components/AlertInformational';
 
 export default function Home() {
     const [session, loading] = useSession();
-
     if (loading) {
         return <PageLoad />;
     }
-
     if (!session) {
         return <SignInOverlay />;
     }
@@ -19,6 +18,7 @@ export default function Home() {
         <>
             <main>
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+                    <AlertInformational />
                     <ProfileCard />
                     <HabitFeed />
                 </div>
